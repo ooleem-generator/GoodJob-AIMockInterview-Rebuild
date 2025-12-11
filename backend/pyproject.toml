@@ -8,6 +8,9 @@ dependencies = [
     "fastapi>=0.122.0",
     "librosa>=0.11.0",
     "pgvector>=0.4.1",
+    "psycopg2>=2.9.11",
+    "python-dotenv>=1.2.1",
     "sqlmodel>=0.0.27",
+    "supabase>=2.25.0",
     "uvicorn>=0.38.0",
 ]
