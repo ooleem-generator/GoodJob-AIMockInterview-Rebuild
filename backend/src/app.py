@@ -16,7 +16,15 @@ from pydantic import BaseModel
 app = FastAPI()
 
 # CORS setting
-# app.add_middleware(CORSMiddleware, allow_origins=settings.CORS_ORIGINS)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-# @app.get("/")
+@app.get("/")
+async def root():
+    return {"message": "GoodJob AI mock Interview API"}
