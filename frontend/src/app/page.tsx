@@ -1,65 +1,82 @@
-import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import AiInterviewInfoSection from "./_components/AiInterviewInfoSection";
+import { Metadata } from "next";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "AI 모의면접 - 랜딩페이지 | GoodJob",
+  description: "AI 모의면접 서비스 | 베타버전 체험하기",
+};
+
+export default function AiInterviewPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 overflow-hidden relative">
+      {/* Glassmorphism Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full">
+        {/* Large cyan circle - top left */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-cyan-300/30 to-cyan-500/20 rounded-full blur-3xl"></div>
+
+        {/* Blue circle - center bottom */}
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-blue-400/40 to-blue-600/30 rounded-full blur-3xl"></div>
+
+        {/* Green gradient circle - center right */}
+        <div className="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-1/2 w-72 h-72 bg-gradient-to-l from-white/20 via-green-300/30 to-green-500/40 rounded-full blur-3xl"></div>
+
+        {/* Small green circle - top right */}
+        <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-green-400/50 to-green-600/30 rounded-full blur-2xl"></div>
+
+        {/* Additional floating elements */}
+        <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-gradient-to-br from-purple-300/20 to-pink-400/20 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-40 h-40 bg-gradient-to-tr from-yellow-300/20 to-orange-400/20 rounded-full blur-2xl"></div>
+      </div>
+
+      <div className="container mx-auto px-4 h-full relative z-10 flex flex-col">
+        {/* 상단 메인 섹션 */}
+        <div className="flex-1 flex flex-col justify-center">
+          {/* 메인 타이틀과 설명 */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full text-sm font-medium mb-6 shadow-lg">
+              🚀 베타 버전 - 지금 무료로 체험해보세요
+            </div>
+
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+              <img
+                src="/assets/good-job-logo.webp"
+                alt="Good Job Logo"
+                className="inline-block h-12 w-auto mr-3 align-middle"
+              />
+              면접, 이제 AI와 함께
+              <span className="text-blue-600"> 실전처럼 연습하세요</span>
+            </h1>
+
+            <p className="text-lg text-gray-700 leading-relaxed mb-8 max-w-4xl mx-auto">
+              실제 면접관과 같은 AI가 당신만의 맞춤 질문을 만들고,
+              <span className="font-semibold text-gray-900">
+                {" "}
+                적절한 피드백
+              </span>
+              을 주며 면접 실력을 키워드립니다.
+            </p>
+          </div>
+
+          {/* CTA 버튼 */}
+          <div className="flex justify-center items-center mb-8">
+            <Link prefetch={true} href="/select">
+              <Button
+                size="lg"
+                className="h-16 px-12 text-xl font-bold bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 border-0 rounded-2xl shadow-2xl text-white"
+              >
+                베타 버전 체험하기
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        {/* 하단 AI 면접 정보 카드 섹션 */}
+        <AiInterviewInfoSection />
+      </div>
     </div>
   );
 }
