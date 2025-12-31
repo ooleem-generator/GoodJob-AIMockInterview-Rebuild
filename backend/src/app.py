@@ -5,6 +5,7 @@ from typing import Union
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.config import settings
+from src.routers import test
 from pydantic import BaseModel
 
 # class ChatRequest(BaseModel):
@@ -28,6 +29,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(test.router)
 
 
 @app.get("/")

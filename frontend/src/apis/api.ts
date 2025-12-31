@@ -10,9 +10,22 @@ export const apiConfig = {
 // axios 인스턴스 생성
 export const api = axios.create(apiConfig);
 
+// 토큰 getter 함수 (외부에서 설정)
+let getTokenFn: (() => Promise<string | null>) | null = null;
+
+export function setTokenGetter(fn: () => Promise<string | null>) {
+  getTokenFn = fn;
+}
+
 // 요청 인터셉터 (JWT 토큰 자동 추가)
 api.interceptors.request.use(
-  (config) => {
+  async (config) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
     return config;
   },
   (error) => {

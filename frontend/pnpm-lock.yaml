@@ -84,9 +84,6 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.17
-      '@types/axios':
-        specifier: ^0.9.36
-        version: 0.9.36
       '@types/node':
         specifier: ^20
         version: 20.19.26
@@ -1163,9 +1160,6 @@ packages:
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
-
-  '@types/axios@0.9.36':
-    resolution: {integrity: sha512-NLOpedx9o+rxo/X5ChbdiX6mS1atE4WHmEEIcR9NLenRVa5HoVjAvjafwU3FPTqnZEstpoqCaW7fagqSoTDNeg==}
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
@@ -3833,8 +3827,6 @@ snapshots:
     dependencies:
       tslib: 2.8.1
     optional: true
-
-  '@types/axios@0.9.36': {}
 
   '@types/estree@1.0.8': {}
 

@@ -4,7 +4,9 @@ import jwt
 from jwt import PyJWKClient
 from functools import lru_cache
 from typing import Dict, Optional
-from config import settings
+from src.config import settings
+import certifi
+import ssl
 
 security = HTTPBearer()
 
@@ -16,12 +18,18 @@ JWKS_URL = f"{CLERK_DOMAIN}/.well-known/jwks.json"
 def get_jwks_client() -> PyJWKClient:
     # PyJWKClient 싱글톤 인스턴스
     # - 자동 키 로테이션 지원, 1시간 캐싱
+    # - certifi를 사용하여 SSL 인증서 검증
+
+    # SSL 컨텍스트 생성
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+
     return PyJWKClient(
         JWKS_URL,
         cache_keys=True,
         max_cached_keys=16,
         cache_jwk_set=True,
         lifespan=3600,  # 1시간
+        ssl_context=ssl_context,  # SSL 인증서 검증 컨텍스트 추가
     )
 
 
@@ -39,7 +47,6 @@ async def get_current_user(
             token,  # Authorization 헤더에서 받은 JWT 문자열
             signing_key.key,  # JWT 서명을 검증하기 위한 공개키, Clerk가 개인키로 서명, JWKS에서 받은 공개키로 검증
             algorithms=["RS256"],  # 허용할 서명 알고리즘 목록, Clerk는 RS256 사용
-            audience=CLERK_DOMAIN,  # 누구를 위해 발급되었는가, JWT의 aud 클레임과 대응
             issuer=CLERK_DOMAIN,  # 토큰 발급자, JWT의 iss 클레임과 대응
             options={
                 "require": [
@@ -48,7 +55,7 @@ async def get_current_user(
                     "sub",
                 ],  # JWT payload에 반드시 존재해야 하는 클레임, 일반적으로 exp: 만료 시간, iat: 발급 시간, sub: 유저 고유 id
                 "verify_exp": True,
-                "verify_aud": True,
+                "verify_aud": False,  # Clerk 토큰은 aud 대신 azp 사용
                 "verify_iss": True,
             },
         )

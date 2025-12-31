@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
 // fonts
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 
 // providers
 import { Providers } from "@/providers/providers";
+import { DevTestLoader } from "@/components/DevTestLoader";
 
 export default function RootLayout({
   children,
@@ -23,13 +25,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} antialiased`}
-        suppressHydrationWarning
-      >
-        <Providers>{children}</Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${inter.variable} antialiased`}
+          suppressHydrationWarning
+        >
+          <Providers>
+            <DevTestLoader />
+            {children}
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

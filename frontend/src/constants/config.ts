@@ -23,9 +23,9 @@ interface EnvironmentConfig {
 const environmentConfigs: Record<Environment, EnvironmentConfig> = {
   development: {
     BACKEND_ORIGIN:
-      process.env.NEXT_PUBLIC_BACKEND_ORIGIN || "http://localhost:8000",
+      process.env.NEXT_PUBLIC_BACKEND_ORIGIN || "http://localhost:8080",
     API_BASE_URL:
-      process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api",
+      process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080/api",
     /*AI_API_BASE: process.env.NEXT_PUBLIC_AI_API_BASE || "http://localhost:8081",
     SOCKET_CHAT_URL:
       process.env.NEXT_PUBLIC_SOCKET_CHAT_URL ||

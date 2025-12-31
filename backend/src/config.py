@@ -6,7 +6,10 @@ class Settings(BaseSettings):
     SUPABASE_URL: str
     SUPABASE_API_KEY: str
 
-    GOOGLE_APPLICATION_CREDENTIALS: str
+    GOOGLE_APPLICATION_CREDENTIALS: str | None = None
+
+    LANGSMITH_API_KEY: str | None = None
+    LANGSMITH_TRACING: str | None = None
 
     CORS_ORIGINS: List[str] = ["http://localhost:3000"]
 
