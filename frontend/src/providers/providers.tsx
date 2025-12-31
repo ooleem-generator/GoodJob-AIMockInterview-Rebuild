@@ -6,8 +6,24 @@ import { getQueryClient } from "./get-query-client";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 
+import { useAuth } from "@clerk/nextjs";
+import { setTokenGetter } from "@/apis/api";
+import { useEffect } from "react";
+
 interface ProvidersProps {
   children: React.ReactNode;
+}
+
+export function AuthInitializer({ children }: { children: React.ReactNode }) {
+  const { getToken } = useAuth();
+
+  useEffect(() => {
+    setTokenGetter(async () => {
+      return await getToken();
+    });
+  }, [getToken]);
+
+  return <>{children}</>;
 }
 
 export function Providers({ children }: ProvidersProps) {
@@ -21,7 +37,9 @@ export function Providers({ children }: ProvidersProps) {
         enableSystem
         disableTransitionOnChange
       >
-        <AntdRegistry>{children}</AntdRegistry>
+        <AntdRegistry>
+          <AuthInitializer>{children}</AuthInitializer>
+        </AntdRegistry>
       </NextThemesProvider>
       {process.env.NODE_ENV === "development" && (
         <ReactQueryDevtools initialIsOpen={false} />
