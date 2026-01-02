@@ -5,7 +5,7 @@ from typing import Union
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.config import settings
-from src.routers import test
+from src.routers import test, webhooks
 from pydantic import BaseModel
 
 # class ChatRequest(BaseModel):
@@ -31,6 +31,7 @@ app.add_middleware(
 )
 
 app.include_router(test.router)
+app.include_router(webhooks.router)
 
 
 @app.get("/")

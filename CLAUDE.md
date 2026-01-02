@@ -131,6 +131,63 @@ supabase db push
 supabase db diff -f <migration_name>
 ```
 
+#### Clerk Webhook Setup with ngrok
+
+**Purpose**: Sync user data from Clerk to Supabase DB when users sign up, update profile, or delete account.
+
+**Local Development Steps:**
+
+1. **Install ngrok** (if not installed):
+
+   ```bash
+   brew install ngrok
+   ```
+
+2. **Start your FastAPI server**:
+
+   ```bash
+   uvicorn app:app --reload
+   # Server runs at http://localhost:8080 (default)
+   ```
+
+3. **Start ngrok tunnel**:
+
+   ```bash
+   ngrok http 8080
+   ```
+
+   - Copy the HTTPS URL (e.g., `https://abc123.ngrok.io`)
+
+4. **Configure Clerk Dashboard**:
+
+   - Go to [Clerk Dashboard](https://dashboard.clerk.com) → Your Application
+   - Navigate to **Webhooks** section
+   - Click **Add Endpoint**
+   - **Endpoint URL**: `https://abc123.ngrok.io/api/webhooks/clerk`
+   - **Subscribe to events**:
+     - `user.created`
+     - `user.updated`
+     - `user.deleted`
+   - Click **Create**
+   - Copy the **Signing Secret** (starts with `whsec_...`)
+
+5. **Update environment variables**:
+
+   - Open `backend/.env.local`
+   - Replace `CLERK_WEBHOOK_SECRET=whsec_your_webhook_secret_here` with actual secret
+   - Restart FastAPI server
+
+6. **Test webhook**:
+   - In Clerk Dashboard → Webhooks → Your endpoint
+   - Click **Send test event** (e.g., `user.created`)
+   - Check FastAPI logs for successful webhook processing
+
+**Production Deployment:**
+
+- Use your actual domain instead of ngrok (e.g., `https://api.yourdomain.com/webhooks/clerk`)
+- Update `CLERK_WEBHOOK_SECRET` in `.env.production`
+- Configure webhook endpoint in Clerk Dashboard with production URL
+
 ## Architecture
 
 ### Frontend Structure
@@ -159,11 +216,13 @@ The backend uses **three separate .env files**:
 - **`.env.production`**: Production deployment (Supabase Cloud URLs)
 
 **How it works:**
+
 - `src/config.py` uses the `ENV_FILE` environment variable to determine which file to load
 - If `ENV_FILE` is not set, it defaults to `.env.local` for local development
 - To use production settings, set `ENV_FILE=.env.production` before running the server
 
 **Local Supabase URLs** (after running `supabase start`):
+
 - API: `http://127.0.0.1:54321`
 - Database: `postgresql://postgres:postgres@127.0.0.1:54322/postgres`
 - Studio (UI): `http://127.0.0.1:54323`

@@ -33,6 +33,7 @@ class Settings(BaseSettings):
 
     # Clerk Authentication
     CLERK_FRONTEND_URL: str
+    CLERK_WEBHOOK_SECRET: str | None = None  # Required for webhook verification
 
     # Environment
     ENV: str = "local"  # local, production

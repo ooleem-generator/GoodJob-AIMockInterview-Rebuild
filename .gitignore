@@ -4,8 +4,3 @@
 
 # macOS
 .DS_Store
-
-# Supabase local files
-backend/supabase/.branches
-backend/supabase/.temp
-backend/supabase/.gitignore
